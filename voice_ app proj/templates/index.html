@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Voice Recognition System</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <h1>🎙️ Voice Recognition System</h1>
+    <div class="container">
+        <div class="box" id="box1">
+            <button id="recordBtn">🎤 Record</button>
+        </div>
+        <div class="box" id="box2">
+            <h3>🧠 What I Said</h3>
+            <p id="textOutput">---</p>
+        </div>
+        <div class="box" id="box3">
+            <h3>🌍 Translation (Urdu)</h3>
+            <p id="translationOutput">---</p>
+        </div>
+        <div class="box" id="box4">
+            <canvas id="waveCanvas"></canvas>
+        </div>
+    </div>
+
+    <script src="{{ url_for('static', filename='waves.js') }}"></script>
+    <script>
+        document.getElementById("recordBtn").addEventListener("click", () => {
+            fetch("/record")
+                .then(res => res.json())
+                .then(data => {
+                    document.getElementById("textOutput").innerText = data.text;
+                    document.getElementById("translationOutput").innerText = data.translation;
+                });
+        });
+    </script>
+</body>
+</html>
